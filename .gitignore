@@ -1,0 +1,13 @@
+# Python bytecode caches
+__pycache__/
+*.pyc
+
+# Local SQLite databases
+*.db
+
+# Virtual environments
+venv/
+.venv/
+
+# IDE settings
+.vscode/
