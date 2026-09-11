@@ -11,3 +11,7 @@ venv/
 
 # IDE settings
 .vscode/
+
+# Environment variables
+.env
+.env.local
