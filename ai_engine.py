@@ -1,18 +1,21 @@
 import json
 import os
 from groq import Groq
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 
 class AIEngine:
 
     def __init__(self):
-        # Fetch key from environment variables to keep repository secure
         api_key = os.getenv("GROQ_API_KEY")
         if not api_key:
             print("[Warning]: GROQ_API_KEY environment variable is not set.")
 
         self.client = Groq(api_key=api_key)
-        self.model = "llama-3.3-70b-versatile"
+        self.model = "openai/gpt-oss-120b"
 
     def transcribe_audio(self, audio_file_path):
         """Transcribes audio using Groq's Whisper model."""
@@ -34,9 +37,9 @@ class AIEngine:
 
     def generate_question(self, topic="Behavioral"):
         prompt = (
-            f"You are an expert technical and behavioral interviewer. Generate"
-            f" ONE clear, challenging {topic} interview question. Return ONLY"
-            " the question text itself without intro or outro."
+            f"You are an expert {topic} interviewer. Generate ONE clear,"
+            f" challenging question appropriate for a {topic} interview."
+            " Return only the question text without an introduction or outro."
         )
         try:
             response = self.client.chat.completions.create(
@@ -53,22 +56,22 @@ class AIEngine:
                 " challenge at work."
             )
 
-    def analyze_response(self, question, user_answer):
-        """Analyzes candidate's answer using Groq Llama 3.3, provides a score out of 10,
+    def analyze_response(self, question, user_answer, interview_type="Behavioral"):
+        """Analyze a candidate's answer using expectations for the chosen interview type.
 
-        explains the score, and gives tips for improvement.
+        Return a score out of 10, its rationale, and improvement tips.
         """
         prompt = f"""
-        You are an expert technical and behavioral interview coach evaluating a candidate's response.
+        You are an expert {interview_type} interview coach evaluating a candidate's response.
 
         Question Asked: "{question}"
         Candidate's Response: "{user_answer}"
 
-        Evaluate the response carefully. Return ONLY a valid JSON object with the following keys:
+        Evaluate the response against expectations for a {interview_type} interview. Return ONLY a valid JSON object with the following keys:
         {{
             "overall_score": <float between 1.0 and 10.0>,
             "score_reason": "<1-2 sentences explaining why they earned this specific score>",
-            "improvement_tips": "<2-3 actionable tips on how to improve this answer or hit the STAR method better>"
+            "improvement_tips": "<2-3 actionable tips relevant to this interview type>"
         }}
         Do not include markdown formatting or extra text outside the raw JSON object.
         """
