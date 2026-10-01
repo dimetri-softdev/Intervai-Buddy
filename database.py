@@ -159,6 +159,21 @@ class DatabaseManager:
             "recent_sessions": self.cursor.fetchall(),
         }
 
+    def get_interview_type_analytics(self, user_id):
+        self.cursor.execute(
+            """
+            SELECT topic, COUNT(*), COALESCE(ROUND(AVG(overall_score), 1), 0.0)
+            FROM interview_history
+            WHERE user_id = ?
+            GROUP BY topic
+            """,
+            (user_id,),
+        )
+        return {
+            topic: {"sessions": session_count, "average_score": average_score}
+            for topic, session_count, average_score in self.cursor.fetchall()
+        }
+
     def save_interview_session(
         self, user_id, topic, score, feedback="", feedback_json=None
     ):

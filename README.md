@@ -14,14 +14,14 @@ The application is designed for individual job seekers who want a simple desktop
 
 The system provides:
 
-* User registration and authentication
-* AI-generated interview questions
-* Mock interview sessions
-* AI-powered response analysis
-* Interview statistics
-* Interview history
-* Local data persistence using SQLite
-* Local fallback questions when the AI service is unavailable
+- User registration and authentication
+- AI-generated interview questions
+- Mock interview sessions
+- AI-powered response analysis
+- Interview statistics
+- Interview history
+- Local data persistence using SQLite
+- Local fallback questions when the AI service is unavailable
 
 ---
 
@@ -56,17 +56,23 @@ IntervAI/
 │       └── Response analysis
 │
 ├── app.py
-│   └── IntervAIApp
-│       ├── Authentication
-│       ├── Dashboard
-│       ├── Interview sessions
-│       └── Analytics
+│   └── Desktop application entry point
 │
 ├── database.py
 │   └── DatabaseManager
 │       ├── User authentication
 │       ├── User statistics
 │       └── Interview history
+│
+├── ui/
+│   ├── analytics_view.py
+│   ├── auth_view.py
+│   ├── constants.py
+│   ├── dashboard_view.py
+│   ├── main_window.py
+│   ├── session_controller.py
+│   ├── session_view.py
+│   └── theme.py
 │
 └── test_pipeline.py
     └── Integration testing
@@ -103,9 +109,7 @@ IntervAI is divided into three main components:
 
 ## 🖥️ `app.py`
 
-`app.py` is the main entry point for the application.
-
-It creates the required application components and displays the authentication interface.
+`app.py` is the stable launch point (`python app.py`) and re-exports the main UI names for compatibility. The window shell lives in `ui/main_window.py`; authentication, dashboard, session, and analytics responsibilities are split into their matching `ui/*` modules.
 
 The application flow is approximately:
 
@@ -185,12 +189,12 @@ The application uses Python's built-in `sqlite3` library for local data persiste
 
 The database manager is responsible for:
 
-* Creating database tables
-* Registering users
-* Authenticating users
-* Managing user statistics
-* Recording interview history
-* Retrieving stored interview information
+- Creating database tables
+- Registering users
+- Authenticating users
+- Managing user statistics
+- Recording interview history
+- Retrieving stored interview information
 
 The database tables include:
 
@@ -258,9 +262,9 @@ python test_pipeline.py
 
 Before running IntervAI, make sure you have:
 
-* **Python 3.x**
-* Internet connection for Gemini AI functionality
-* A Google Gemini API key *(required for AI functionality)*
+- **Python 3.x**
+- Internet connection for Gemini AI functionality
+- A Google Gemini API key _(required for AI functionality)_
 
 Check your Python installation:
 
@@ -435,10 +439,10 @@ IntervAI includes a local fallback mechanism for interview questions.
 
 If the Gemini API request:
 
-* Fails
-* Times out
-* Cannot be reached
-* Encounters another runtime problem
+- Fails
+- Times out
+- Cannot be reached
+- Encounters another runtime problem
 
 the application can use a predefined list of local interview questions.
 
@@ -487,8 +491,8 @@ This can result in runtime errors.
 
 The AI-related methods should be correctly placed inside the `AIEngine` class, and the backup questions should either:
 
-* Become a class variable, or
-* Be referenced as a module-level variable.
+- Become a class variable, or
+- Be referenced as a module-level variable.
 
 For example:
 
@@ -522,9 +526,9 @@ test_pipeline.py
 
 which can be used to test the integration between:
 
-* SQLite database
-* AI question generation
-* AI response analysis
+- SQLite database
+- AI question generation
+- AI response analysis
 
 Run:
 
@@ -552,20 +556,20 @@ These resources can be used to understand the intended visual design and user ex
 
 # 📋 Current Features
 
-* ✅ Desktop graphical interface
-* ✅ User registration
-* ✅ User authentication
-* ✅ Local SQLite database
-* ✅ Interview dashboard
-* ✅ Mock interview sessions
-* ✅ AI-generated interview questions
-* ✅ Local question fallback
-* ✅ AI response analysis
-* ✅ Interview history
-* ✅ User statistics
-* ✅ Analytics interface
-* ✅ Background AI requests
-* ✅ Integration testing
+- ✅ Desktop graphical interface
+- ✅ User registration
+- ✅ User authentication
+- ✅ Local SQLite database
+- ✅ Interview dashboard
+- ✅ Mock interview sessions
+- ✅ AI-generated interview questions
+- ✅ Local question fallback
+- ✅ AI response analysis
+- ✅ Interview history
+- ✅ User statistics
+- ✅ Analytics interface
+- ✅ Background AI requests
+- ✅ Integration testing
 
 ---
 
@@ -573,22 +577,22 @@ These resources can be used to understand the intended visual design and user ex
 
 Potential improvements include:
 
-* [ ] Fix `AIEngine` class scoping and indentation
-* [ ] Add `requirements.txt`
-* [ ] Improve AI response analysis
-* [ ] Add more interview categories
-* [ ] Add difficulty levels
-* [ ] Add technical interview questions
-* [ ] Add behavioural interview questions
-* [ ] Improve interview scoring
-* [ ] Add detailed performance reports
-* [ ] Add progress charts
-* [ ] Improve error handling
-* [ ] Add automated unit tests
-* [ ] Improve database security
-* [ ] Package the application as a Windows executable
-* [ ] Improve UI/UX
-* [ ] Add configurable interview settings
+- [ ] Fix `AIEngine` class scoping and indentation
+- [ ] Add `requirements.txt`
+- [ ] Improve AI response analysis
+- [ ] Add more interview categories
+- [ ] Add difficulty levels
+- [ ] Add technical interview questions
+- [ ] Add behavioural interview questions
+- [ ] Improve interview scoring
+- [ ] Add detailed performance reports
+- [ ] Add progress charts
+- [ ] Improve error handling
+- [ ] Add automated unit tests
+- [ ] Improve database security
+- [ ] Package the application as a Windows executable
+- [ ] Improve UI/UX
+- [ ] Add configurable interview settings
 
 ---
 
@@ -617,14 +621,14 @@ Because the application stores authentication and interview information locally,
 
 Important considerations include:
 
-* Never commit API keys
-* Store secrets using environment variables
-* Avoid storing plaintext passwords
-* Validate user input
-* Handle API failures safely
-* Protect sensitive user information
-* Use secure password hashing
-* Add appropriate error handling
+- Never commit API keys
+- Store secrets using environment variables
+- Avoid storing plaintext passwords
+- Validate user input
+- Handle API failures safely
+- Protect sensitive user information
+- Use secure password hashing
+- Add appropriate error handling
 
 ---
 
@@ -641,4 +645,3 @@ This project is intended for educational and development purposes unless otherwi
 Built with:
 
 **Python • CustomTkinter • Google Gemini AI • SQLite**
-
